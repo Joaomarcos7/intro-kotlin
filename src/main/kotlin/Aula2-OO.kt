@@ -6,53 +6,62 @@ import kotlin.time.times
 fun main() {
     val repositorioAnimal = RepositorioAnimal()
     var opcao = 0
-    while (opcao != 6) {
+    while (opcao != 7) {
         menu()
         print("Digite a opção: ")
         opcao = readlnOrNull()?.toInt() ?: 0
         when (opcao) {
             0->{
                 var nome:String;
-                print("Digite o Nome a ser removido: ");
+                print("Digite o Nome a ser removido:");
                 nome = readlnOrNull() ?: "";
-                if(!nome.isNullOrEmpty()){
-                    repositorioAnimal.remover(nome);
-                }
+                repositorioAnimal.remover(nome);
+                println("Nova lista:")
+                repositorioAnimal.listar();1
             }
             1 -> {
                 var idade:Int=0;
                 var color:String;
+                var nome:String;
                 print("Digite a idade: ");
                 idade= readlnOrNull()?.toInt() ?: 0;
                 print("Digite a cor:")
                 color= readlnOrNull() ?: "";
                 var cor:Color = Color.valueOf(color);
+                print("Digite o nome:")
+                nome= readlnOrNull() ?: "";
                 val cachorro = Cachorro(idade,cor)
-                cachorro.nome = "Rex"
+                cachorro.nome = nome
                 repositorioAnimal.adicionar(cachorro)
             }
             2 -> {
                 var idade:Int=0;
                 var color:String;
+                var nome:String;
                 print("Digite a idade: ");
                 idade= readlnOrNull()?.toInt() ?: 0;
                 print("Digite a cor:")
                 color= readlnOrNull() ?: "";
                 var cor:Color = Color.valueOf(color);
+                print("Digite o nome:")
+                nome= readlnOrNull() ?: "";
                 val gato = Gato(idade,cor)
-                gato.nome = "Felix"
+                gato.nome = nome;
                 repositorioAnimal.adicionar(gato)
             }
             3 -> {
                 var idade:Int=0;
                 var color:String;
+                var nome:String;
                 print("Digite a idade: ");
                 idade= readlnOrNull()?.toInt() ?: 0;
                 print("Digite a cor:")
                 color= readlnOrNull() ?: "";
-                var cor:Color = Color;
+                var cor:Color = Color.valueOf(color);
+                print("Digite o nome:")
+                nome= readlnOrNull() ?: "";
                 val passaro = Passaro(idade,cor)
-                passaro.nome = "Piu"
+                passaro.nome = nome;
                 repositorioAnimal.adicionar(passaro)
             }
             4 -> {
@@ -65,13 +74,16 @@ fun main() {
             6->{
                 var idade:Int=0;
                 var color:String;
+                var nome:String;
                 print("Digite a idade: ");
                 idade= readlnOrNull()?.toInt() ?: 0;
                 print("Digite a cor:")
                 color= readlnOrNull() ?: "";
                 var cor:Color = Color.valueOf(color);
+                print("Digite o nome:")
+                nome= readlnOrNull() ?: "";
                 val homem =Homem(idade,cor);
-                homem.nome="João";
+                homem.nome=nome;
                 repositorioAnimal.adicionar(homem)
             }
         }
@@ -79,15 +91,16 @@ fun main() {
     }
 }
 
-enum class Color(val rgb:Int){
-    RED(0xFF0000),
-    GREEN(0x00FF00),
-    BLUE(0x0000FF)
+enum class Color(val rgb:String){
+    RED("red"),
+    GREEN("green"),
+    BLUE("blue"),
+    WHITE("white")
 }
 
 open abstract class Animal(var idade: Int,var cor:Color) {
     open var nome: String = ""
-        get() = "Animal: $field"
+        get() = field;
         set(valor) {
             field = valor
         }
@@ -110,12 +123,24 @@ class Cachorro(idade: Int,cor:Color) : Animal(idade,cor) {
     }
 }
 class Gato(idade: Int,cor: Color) : Animal(idade,cor) {
+
+    override var nome: String = ""
+        get() = field
+        set(valor) {
+            field = valor
+        }
     override fun emitirSom() {
         println("Miau")
     }
 }
 
 class Passaro(idade: Int,cor: Color) : Animal(idade,cor) {
+
+    override var nome: String = ""
+        get() = field
+        set(valor) {
+            field = valor
+        }
     override fun emitirSom() {
         println("Piu piu")
     }
@@ -123,6 +148,12 @@ class Passaro(idade: Int,cor: Color) : Animal(idade,cor) {
 
 
 class Homem(idade: Int,cor:Color) : Animal(idade,cor){
+
+    override var nome: String = ""
+        get() = field
+        set(valor) {
+            field = valor
+        }
     override fun idadeEmAnosHumanos(): Int {
         return super.idadeEmAnosHumanos() / 7;
     }
@@ -139,7 +170,8 @@ fun menu() {
     println("3 - Pássaro")
     println("4 - Listar Animais")
     println("5 - Emitir som")
-    println("6 - Sair")
+    println("6 - Homem")
+    println("7 - Sair")
 }
 
 class RepositorioAnimal {
@@ -154,7 +186,7 @@ class RepositorioAnimal {
     }
 
     fun remover(nome:String){
-        animais.removeIf{it.nome.equals(nome)};
+      animais.removeIf { it.nome.equals(nome) }
     }
 
 
